@@ -103,6 +103,23 @@ public class Vec3
                 a.x * b.y - a.y * b.x);
     }
     
+    public Vec3 plus(Vec3 b)
+    {
+        Vec3 a = this;
+        return new Vec3(a.x + b.x, a.y + b.y, a.z + b.z);
+    }
+    
+    public Vec3 minus(Vec3 b)
+    {
+        Vec3 a = this;
+        return new Vec3(a.x - b.x, a.y - b.y, a.z - b.z);
+    }
+    
+    public Vec3 times(double r)
+    {
+        return new Vec3(x*r, y*r, z*r);
+    }
+    
     @Override
     public String toString()
     {
