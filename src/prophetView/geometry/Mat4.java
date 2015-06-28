@@ -3,6 +3,7 @@ package prophetView.geometry;
 /**
  * @author Giulio Jiang
  * 
+ * 
  *         4x4 Matrix class data[i][j] where i is the i is the y axys and j is
  *         the x axys
  *
@@ -70,12 +71,17 @@ public class Mat4
                 {
                     System.out
                             .println("data size incompatible. Data not loaded");
+                    System.out.println("y size " + data.length);
+                    System.out.println("x size " + data[0].length);
                     return;
                 }
                 this.data = data;
+                return;
             }
         }
         System.out.println("data size incompatible. Data not loaded");
+        System.out.println("y size " + data.length);
+        System.out.println("x size " + data[0].length);
         return;
     }
 
@@ -100,6 +106,84 @@ public class Mat4
         }
 
         return mult;
+    }
+
+    @Override
+    public String toString()
+    {
+        StringBuilder out = new StringBuilder();
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                out.append(data[i][j] + "\t");
+            }
+            out.append("\n");
+        }
+        return out.toString();
+    }
+
+    /**
+     * equals two matrices allowing 1% relative error
+     */
+    public boolean equalsEpsilon(Mat4 b)
+    {
+        Mat4 a = this;
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                if (!NumUtils.equalsRelativeEpsilon(a.data[i][j], b.data[i][j]))
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    // ============================================
+    // TESTS
+
+    public static void main(String[] args)
+    {
+        Mat4 m = new Mat4();
+        if (NumUtils.VERBOSE_TEST)
+        {
+            System.out.println(m);
+        }
+
+        double[][] newData = new double[][] { { 1, 2, 3, 4 }, { 5, 6, 7, 8 },
+                { 9, 0, 1, 2 }, { 3, 4, 5, 6 } };
+
+        // loading from array
+        m.load(newData);
+        if (NumUtils.VERBOSE_TEST)
+        {
+            System.out.println(m);
+        }
+        assert(m.get(0, 0) == 1);
+        assert(m.get(3, 3) == 6);
+
+        // m2 for multiplication test
+        Mat4 m2 = new Mat4();
+        m2.load(new double[][] { { 1, 2, 1, 5 }, { 1, 2, 1, 9 },
+                { 3, 2, 3, 3 }, { -1, -2, 0, -3 } });
+        if (NumUtils.VERBOSE_TEST)
+        {
+            System.out.println(m.mul(m2));
+
+            System.out.println(m.equalsEpsilon(m));
+            System.out.println(m.equalsEpsilon(m2));
+        }
+
+        Mat4 expected = new Mat4();
+        expected.load(new double[][] { { 8, 4, 12, 20 }, { 24, 20, 32, 76 },
+                { 10, 16, 12, 42 }, { 16, 12, 22, 48 } });
+        assert ((m.mul(m2)).equalsEpsilon(expected));
+
+        assert false : "Tests finished";
+        System.out.println("Enable assertions!");
     }
 
 }
