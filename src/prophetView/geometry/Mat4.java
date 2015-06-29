@@ -11,6 +11,13 @@ package prophetView.geometry;
 public class Mat4
 {
 
+    // ==========================================================
+    // TODO
+    //
+    // - add generators for scale and rotation
+    //   and translation matrices
+    // ==========================================================
+    
     private double[][] data;
 
     /**
@@ -107,6 +114,14 @@ public class Mat4
 
         return mult;
     }
+    
+    /**
+     * @return the data array used for the numbers
+     */
+    public double[][] getData()
+    {
+        return data;
+    }
 
     @Override
     public String toString()
@@ -145,7 +160,7 @@ public class Mat4
     // ============================================
     // TESTS
 
-    public static void main(String[] args)
+    public static void test()
     {
         Mat4 m = new Mat4();
         if (NumUtils.VERBOSE_TEST)
@@ -182,8 +197,8 @@ public class Mat4
                 { 10, 16, 12, 42 }, { 16, 12, 22, 48 } });
         assert ((m.mul(m2)).equalsEpsilon(expected));
 
-        assert false : "Tests finished";
-        System.out.println("Enable assertions!");
+//        assert false : "Tests finished";
+//        System.out.println("Enable assertions!");
     }
 
 }
