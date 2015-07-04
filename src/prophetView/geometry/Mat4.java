@@ -122,6 +122,22 @@ public class Mat4
     {
         return data;
     }
+    
+    public Mat4 transpose()
+    {
+        Mat4 out = new Mat4();
+        double[][] transpMat = new double[4][4];
+        
+        for (int i = 0; i < 4; ++i)
+        {
+            for (int j = 0; j < 4; ++j)
+            {
+                transpMat[i][j] = this.data[j][i];
+            }
+        }
+        out.load(transpMat);
+        return out;
+    }
 
     @Override
     public String toString()
