@@ -138,6 +138,23 @@ public class Mat4
         out.load(transpMat);
         return out;
     }
+    
+    /**
+     * @return Matrix to convert to/from a
+     * Y-up and a Z-up coordinate system
+     */
+    public static Mat4 toZUpMatrix()
+    {
+        Mat4 out = new Mat4();
+        double[][] d = new double[][] {
+            {1,0,0,0},
+            {0,0,1,0},
+            {0,1,0,0},
+            {0,0,0,1}
+        };
+        out.load(d);
+        return out;
+    }
 
     @Override
     public String toString()
