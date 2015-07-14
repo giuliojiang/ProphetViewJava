@@ -87,10 +87,9 @@ public class Vec3
         double invLen = 1 / Math.sqrt(len);
         return new Vec3(x * invLen, y * invLen, z * invLen);
     }
-    
+
     /**
-     * @return a normalized spherical coordinate
-     * vector
+     * @return a normalized spherical coordinate vector
      */
     public VecSpherical toVecSpherical()
     {
@@ -98,7 +97,7 @@ public class Vec3
         double vy = vNormalized.getY();
         double vz = vNormalized.getZ();
         double vx = vNormalized.getX();
-        
+
         double theta = Math.acos(vz);
         double phi = Math.atan2(vy, vx);
         phi = (phi < 0) ? phi + 2 * Math.PI : phi;
@@ -145,6 +144,11 @@ public class Vec3
     public Vec3 times(double r)
     {
         return new Vec3(x * r, y * r, z * r);
+    }
+
+    public Vec3 scalarTimes(Vec3 that)
+    {
+        return new Vec3(this.x * that.x, this.y * that.y, this.z * that.z);
     }
 
     /**
