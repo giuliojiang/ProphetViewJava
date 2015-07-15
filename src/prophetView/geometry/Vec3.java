@@ -151,6 +151,12 @@ public class Vec3
         return new Vec3(this.x * that.x, this.y * that.y, this.z * that.z);
     }
 
+    public Vec3 max(Vec3 that)
+    {
+        return new Vec3(Math.max(this.x, that.x), Math.max(this.y, that.y),
+                Math.max(this.z, that.z));
+    }
+
     /**
      * @return the corresponding homogeneous point
      */
