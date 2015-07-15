@@ -1,16 +1,17 @@
 package prophetView.geometry.meshes;
 
 import prophetView.geometry.Vec3;
+import prophetView.utils.Tuple;
 
 public class Sphere
 {
 
     private Vec3 center;
-    private double radius;
-    private Vec3 surfaceColor;
     private Vec3 emissionColor;
-    double transparency;
-    double reflection;
+    private double radius;
+    private double reflection;
+    private Vec3 surfaceColor;
+    private double transparency;
 
     public Sphere(Vec3 center, double radius, Vec3 surfaceColor,
             Vec3 emissionColor, double transparency, double reflection)
@@ -23,8 +24,34 @@ public class Sphere
         this.transparency = transparency;
         this.reflection = reflection;
     }
+
+    public Vec3 getCenter()
+    {
+        return center;
+    }
+
+    public double getReflection()
+    {
+        return reflection;
+    }
+
+    public Vec3 getSurfaceColor()
+    {
+        return surfaceColor;
+    }
+
+    public double getTransparency()
+    {
+        return transparency;
+    }
     
-    public boolean intersect(Vec3 rayorigin, Vec3 raydir, Sphere.IntersectResult t)
+    public Vec3 getEmission()
+    {
+        return emissionColor;
+    }
+
+    public boolean intersect(Vec3 rayorigin, Vec3 raydir,
+            Tuple<Double, Double> t)
     {
         Vec3 l = center.minus(rayorigin);
         double tca = l.dot(raydir);
@@ -33,27 +60,15 @@ public class Sphere
             return false;
         }
         double d2 = l.dot(l) - tca * tca;
-        if (d2 > radius*radius)
+        if (d2 > radius * radius)
         {
             return false;
         }
-        double thc = Math.sqrt(radius*radius - d2);
-        t.t0 = tca - thc;
-        t.t1 = tca + thc;
-        
-        return true;
-    }
-    
-    public class IntersectResult
-    {
-        public IntersectResult(double t0, double t1)
-        {
-            this.t0 = t0;
-            this.t1 = t1;
-        }
+        double thc = Math.sqrt(radius * radius - d2);
+        t.a = tca - thc;
+        t.b = tca + thc;
 
-        public double t0;
-        public double t1;
+        return true;
     }
 
 }
